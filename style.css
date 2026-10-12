@@ -1,0 +1,889 @@
+/* ==========================================
+   1. VARIABLES Y ESTILOS GENERALES
+   ========================================== */
+:root {
+    --color-principal: #8B3A2B;    /* Terracota / Rojo Andino */
+    --color-principal-oscuro: #6d2d21;
+    --color-secundario: #D4A373;   /* Dorado Cálido / Madera */
+    --color-verde: #2A9D8F;        /* Verde Hoja de Coca / Naturaleza */
+    --color-oscuro: #2B2D42;       /* Texto y encabezados */
+    --color-claro: #FAEDCD;        /* Crema Suave */
+    --color-fondo: #F8F9FA;        /* Fondo general */
+    --color-whatsapp: #25D366;     /* Botón flotante */
+    --color-whatsapp-btn: #1a7f45; /* Botones con texto blanco (mejor contraste) */
+    --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fuente-principal);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px; /* evita que el menú fijo tape los títulos */
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-oscuro);
+    line-height: 1.6;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--color-secundario);
+    outline-offset: 2px;
+}
+
+/* ==========================================
+   2. TOP BAR & HEADER
+   ========================================== */
+.top-bar {
+    background-color: var(--color-principal);
+    color: #ffffff;
+    text-align: center;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    color: var(--color-principal);
+    letter-spacing: 1px;
+}
+
+.logo span {
+    font-size: 0.75rem;
+    color: var(--color-secundario);
+    font-weight: bold;
+    display: block;
+    margin-top: -4px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color-oscuro);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--color-principal);
+}
+
+#btn-lang {
+    background: transparent;
+    border: 1px solid var(--color-principal);
+    color: var(--color-principal);
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#btn-lang:hover {
+    background-color: var(--color-principal);
+    color: #ffffff;
+}
+
+/* ==========================================
+   3. HERO SECTION & COTIZADOR (RF01)
+   ========================================== */
+.hero {
+    /* Primero busca tu foto local (img/machu-picchu.jpg); si no existe, usa la de internet */
+    background-image:
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('img/machu-picchu.jpg'),
+        url('https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #3a2a24;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 40px 20px;
+}
+
+.hero-content {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.hero-content h2 {
+    color: #ffffff;               /* antes lo pisaba el color terracota del h2 general */
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+/* Motor de búsqueda de reservas */
+.booking-engine {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-end;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    color: var(--color-oscuro);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-principal);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background: #ffffff;
+}
+
+.btn-search {
+    background-color: var(--color-principal);
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-search:hover {
+    background-color: var(--color-principal-oscuro);
+}
+
+/* Resultado de la cotización en la portada */
+.cotizacion-resultado {
+    background: #ffffff;
+    color: var(--color-oscuro);
+    border-radius: 12px;
+    margin-top: 18px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 30px;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.cotizacion-datos {
+    flex: 1 1 280px;
+}
+
+.cotizacion-datos .etiqueta {
+    font-size: 0.85rem;
+    color: #666;
+    text-shadow: none;
+    margin: 0;
+}
+
+.cotizacion-datos #cotizacionResumen {
+    font-size: 1rem;
+    color: var(--color-oscuro);
+    text-shadow: none;
+    margin: 4px 0;
+}
+
+.cotizacion-total {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-principal);
+    line-height: 1.2;
+}
+
+.cotizacion-nota {
+    font-size: 0.85rem !important;
+    color: #555 !important;
+    text-shadow: none !important;
+    margin: 6px 0 0 0 !important;
+}
+
+.cotizacion-nota i {
+    color: var(--color-verde);
+}
+
+.cotizacion-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 1 280px;
+}
+
+/* Botones reutilizables */
+.btn-wa,
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-wa {
+    background-color: var(--color-whatsapp-btn);
+    color: #ffffff;
+    border: 2px solid var(--color-whatsapp-btn);
+}
+
+.btn-wa:hover {
+    background-color: #146035;
+    border-color: #146035;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-principal);
+    border: 2px solid var(--color-principal);
+}
+
+.btn-ghost:hover {
+    background: var(--color-principal);
+    color: #ffffff;
+}
+
+/* ==========================================
+   4. SECCIONES GENERALES Y HABITACIONES
+   ========================================== */
+.container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    text-align: center;
+    color: var(--color-principal);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.subtitulo-sec {
+    text-align: center;
+    color: #666;
+    margin: -15px auto 30px auto;
+    max-width: 680px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Si la foto no existe, se ve este fondo en lugar de un recuadro roto */
+.card-img {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-secundario), var(--color-principal));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card-img-icon {
+    font-size: 3rem;
+    color: rgba(255,255,255,0.55);
+}
+
+.card-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge-directo {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--color-verde);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-body h3 {
+    margin-bottom: 10px;
+    color: var(--color-oscuro);
+}
+
+.card-body p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.price {
+    display: block;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #1f7a6f;
+    margin-bottom: 15px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-card {
+    flex: 1;
+    background-color: var(--color-principal);
+    color: #ffffff;
+    border: 2px solid var(--color-principal);
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-card:hover {
+    background-color: var(--color-principal-oscuro);
+    border-color: var(--color-principal-oscuro);
+}
+
+.btn-card-sec {
+    background: transparent;
+    color: var(--color-principal);
+}
+
+.btn-card-sec:hover {
+    background: var(--color-principal);
+    color: #ffffff;
+}
+
+/* ==========================================
+   5. EXPERIENCIA LOCAL
+   ========================================== */
+.bg-alt {
+    background-color: var(--color-claro);
+    padding: 50px 0;
+}
+
+.bg-alt .container,
+.bg-light .container {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.bg-light {
+    background-color: #ffffff;
+    padding: 50px 0;
+}
+
+.itinerarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.itinerario-card {
+    background: #ffffff;
+    padding: 25px 22px;
+    border-radius: 10px;
+    border-top: 4px solid var(--color-secundario);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.badge-dia {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--color-principal);
+    margin-bottom: 10px;
+}
+
+.badge-dia i {
+    margin-right: 5px;
+}
+
+.itinerario-card h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.itinerario-card p {
+    font-size: 0.93rem;
+    color: #555;
+}
+
+.itinerario-card .enlace-seccion {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--color-principal);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.itinerario-card .enlace-seccion:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================
+   6. CARTA ANDINA Y MATES
+   ========================================== */
+.aviso-mate {
+    background: #ffffff;
+    border: 2px dashed var(--color-principal);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.aviso-mate i {
+    font-size: 1.8rem;
+    color: var(--color-principal);
+    margin-top: 3px;
+}
+
+.aviso-mate strong {
+    color: var(--color-principal);
+}
+
+.carta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.carta-col {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.carta-col h3 {
+    color: var(--color-principal);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--color-secundario);
+}
+
+.carta-col h3 i {
+    margin-right: 8px;
+}
+
+.carta-lista {
+    list-style: none;
+}
+
+.carta-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.carta-item:last-child {
+    border-bottom: none;
+}
+
+.carta-item strong {
+    display: block;
+    color: var(--color-oscuro);
+}
+
+.carta-item span.desc {
+    font-size: 0.88rem;
+    color: #666;
+}
+
+.carta-precio {
+    font-weight: bold;
+    color: #1f7a6f;
+    white-space: nowrap;
+}
+
+.carta-nota {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 18px;
+}
+
+.carta-cta {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* ==========================================
+   7. ACLIMATACIÓN Y CONTACTO
+   ========================================== */
+.cards-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.info-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-principal);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.info-icon {
+    font-size: 2rem;
+    color: var(--color-principal);
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.salud-list {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.salud-list li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.salud-list i {
+    color: var(--color-principal);
+    margin-right: 8px;
+}
+
+.aviso-medico {
+    margin-top: 22px;
+    font-size: 0.88rem;
+    color: #555;
+    text-align: center;
+}
+
+.contacto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.contacto-info p {
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.contacto-info i {
+    color: var(--color-principal);
+    width: 22px;
+}
+
+.contacto-info a {
+    color: inherit;
+}
+
+.contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contacto-form .form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+footer {
+    background: var(--color-oscuro);
+    color: #ffffff;
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   8. MODAL DE RESERVA
+   ========================================== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.modal-contenido {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 540px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 28px;
+    position: relative;
+}
+
+.modal-contenido h3 {
+    color: var(--color-principal);
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.modal-sub {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 18px;
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-cerrar:hover {
+    color: var(--color-principal);
+}
+
+.form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-modal textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.nota-mate {
+    font-size: 0.82rem;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* Calculadora dinámica del modal */
+.resumen-precio {
+    background-color: #f8f9fa;
+    border: 1px dashed var(--color-principal);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    color: #444;
+    margin: 4px 0 6px 0;
+    text-align: center;
+}
+
+.monto-destacado {
+    color: var(--color-principal);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.texto-error {
+    color: #c62828;
+}
+
+/* ==========================================
+   9. NOTIFICACIÓN TOAST Y BOTÓN WHATSAPP
+   ========================================== */
+.toast-notif {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    max-width: calc(100vw - 120px);
+    padding: 14px 22px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 3000;
+    display: none;
+    animation: toastIn 0.3s ease-out;
+}
+
+.toast-notif.exito {
+    background-color: #2e7d32;
+}
+
+.toast-notif.error {
+    background-color: #c62828;
+}
+
+@keyframes toastIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Botón Flotante de WhatsApp (RF02) */
+.btn-whatsapp {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--color-whatsapp);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.3s;
+    text-decoration: none;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================
+   10. RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+    }
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 16px;
+    }
+    html {
+        scroll-padding-top: 20px;
+    }
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+    .form-group,
+    .booking-engine .btn-search {
+        width: 100%;
+    }
+    .form-fila {
+        grid-template-columns: 1fr;
+    }
+    .cotizacion-acciones {
+        flex: 1 1 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .card, .btn-whatsapp { transition: none; }
+    .toast-notif { animation: none; }
+}

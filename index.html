@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hotel Sumaq Samay en Machu Picchu, Cusco. Reserva directo y recibe un mate de bienvenida de cortesía.">
+    <!-- Seguridad: solo se permite cargar recursos propios y los de Font Awesome / Unsplash -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com; font-src https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+    <meta name="referrer" content="no-referrer">
+    <title>Hotel Sumaq Samay | Cusco - Machu Picchu</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Banner Top Beneficio Directo -->
+    <div class="top-bar">
+        <p>✨ <span data-es="Mejor Precio Garantizado + Mate de bienvenida de cortesía reservando directo"
+                    data-en="Best Price Guaranteed + Complimentary welcome tea when you book direct">Mejor Precio Garantizado + Mate de bienvenida de cortesía reservando directo</span></p>
+    </div>
+
+    <!-- Header y Navegación -->
+    <header>
+        <div class="logo">
+            <h1>SUMAQ SAMAY</h1>
+            <span>HOTEL - CUSCO</span>
+        </div>
+        <nav aria-label="Principal">
+            <ul>
+                <li><a href="#inicio" data-es="Inicio" data-en="Home">Inicio</a></li>
+                <li><a href="#habitaciones" data-es="Habitaciones" data-en="Rooms">Habitaciones</a></li>
+                <li><a href="#experiencia" data-es="Experiencia" data-en="Experience">Experiencia</a></li>
+                <li><a href="#carta" data-es="Carta & Mates" data-en="Menu & Teas">Carta & Mates</a></li>
+                <li><a href="#aclimatacion" data-es="Aclimatación" data-en="Altitude Care">Aclimatación</a></li>
+                <li><a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="lang-selector">
+            <button id="btn-lang" type="button" aria-label="Cambiar idioma / Change language">🌐 ES / EN</button>
+        </div>
+    </header>
+
+    <!-- Hero Section con Cotizador (RF01) -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h2 data-es="Tu refugio de confort a los pies de Machu Picchu"
+                data-en="Your comfortable retreat at the foot of Machu Picchu">Tu refugio de confort a los pies de Machu Picchu</h2>
+            <p data-es="Conéctate con la magia andina con la mejor atención y comodidad."
+               data-en="Connect with Andean magic through warm service and comfort.">Conéctate con la magia andina con la mejor atención y comodidad.</p>
+
+            <!-- Motor de búsqueda / Cotizador -->
+            <form class="booking-engine" id="formCotizador" novalidate>
+                <div class="form-group">
+                    <label for="checkin" data-es="Llegada" data-en="Check-in">Llegada</label>
+                    <input type="date" id="checkin" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkout" data-es="Salida" data-en="Check-out">Salida</label>
+                    <input type="date" id="checkout" required>
+                </div>
+                <div class="form-group">
+                    <label for="guests" data-es="Huéspedes" data-en="Guests">Huéspedes</label>
+                    <select id="guests">
+                        <option value="1" data-es="1 Persona" data-en="1 Guest">1 Persona</option>
+                        <option value="2" data-es="2 Personas" data-en="2 Guests">2 Personas</option>
+                        <option value="3" data-es="3+ Personas" data-en="3+ Guests">3+ Personas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="room-type" data-es="Habitación" data-en="Room">Habitación</label>
+                    <select id="room-type"></select>
+                </div>
+                <button type="submit" class="btn-search" data-es="Cotizar Ahora" data-en="Get a Quote">Cotizar Ahora</button>
+            </form>
+
+            <!-- Resultado de la cotización (aparece al pulsar "Cotizar Ahora") -->
+            <div class="cotizacion-resultado" id="cotizacionResultado" hidden aria-live="polite">
+                <div class="cotizacion-datos">
+                    <p class="etiqueta" data-es="Tu cotización" data-en="Your quote">Tu cotización</p>
+                    <p id="cotizacionResumen"></p>
+                    <div class="cotizacion-total" id="cotizacionTotal"></div>
+                    <p class="cotizacion-nota">
+                        <i class="fa-solid fa-mug-hot"></i>
+                        <span data-es="Reservando directo en esta web incluye mate de bienvenida de cortesía. Precio referencial: confirmamos disponibilidad por WhatsApp."
+                              data-en="Booking directly on this site includes a complimentary welcome tea. Estimated price: we confirm availability on WhatsApp.">Reservando directo en esta web incluye mate de bienvenida de cortesía. Precio referencial: confirmamos disponibilidad por WhatsApp.</span>
+                    </p>
+                </div>
+                <div class="cotizacion-acciones">
+                    <button type="button" class="btn-wa" id="btnCotizarWhatsapp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span data-es="Enviar cotización por WhatsApp" data-en="Send quote on WhatsApp">Enviar cotización por WhatsApp</span>
+                    </button>
+                    <button type="button" class="btn-ghost" id="btnReservarDesdeCotizacion"
+                            data-es="Reservar con estos datos" data-en="Book with these details">Reservar con estos datos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulo de Habitaciones (se genera desde js/main.js) -->
+    <section id="habitaciones" class="container">
+        <h2 data-es="Nuestras Habitaciones" data-en="Our Rooms">Nuestras Habitaciones</h2>
+        <div class="cards-grid" id="habitacionesGrid"></div>
+    </section>
+
+    <!-- Experiencia local -->
+    <section id="experiencia" class="bg-alt">
+        <div class="container">
+            <h2 data-es="Tu Experiencia en Machu Picchu Pueblo" data-en="Your Experience in Machu Picchu Pueblo">Tu Experiencia en Machu Picchu Pueblo</h2>
+            <p class="subtitulo-sec"
+               data-es="Ubicación privilegiada y facilidades para una visita sin complicaciones a la ciudadela"
+               data-en="A prime location and easy access for a hassle-free visit to the citadel">Ubicación privilegiada y facilidades para una visita sin complicaciones a la ciudadela</p>
+
+            <div class="itinerarios-grid">
+                <div class="itinerario-card">
+                    <span class="badge-dia"><i class="fa-solid fa-bus"></i> <span data-es="Conexión Directa" data-en="Direct Access">Conexión Directa</span></span>
+                    <h3 data-es="Facilidades para la subida a Machu Picchu" data-en="Help getting up to Machu Picchu">Facilidades para la subida a Machu Picchu</h3>
+                    <p data-es="Te orientamos con los horarios de los buses Consettur hacia la ciudadela inca, a solo unos pasos de nuestras instalaciones."
+                       data-en="We guide you with the Consettur bus schedules to the Inca citadel, just steps from our hotel.">Te orientamos con los horarios de los buses Consettur hacia la ciudadela inca, a solo unos pasos de nuestras instalaciones.</p>
+                </div>
+
+                <div class="itinerario-card">
+                    <span class="badge-dia"><i class="fa-solid fa-utensils"></i> <span data-es="Gastronomía Local" data-en="Local Cuisine">Gastronomía Local</span></span>
+                    <h3 data-es="Comida tradicional andina" data-en="Traditional Andean food">Comida tradicional andina</h3>
+                    <p data-es="Platos típicos preparados con insumos de la región, para reponer energías después de tu caminata."
+                       data-en="Typical dishes made with local ingredients to restore your energy after your hike.">Platos típicos preparados con insumos de la región, para reponer energías después de tu caminata.</p>
+                    <a class="enlace-seccion" href="#carta" data-es="Ver la carta" data-en="See the menu">Ver la carta</a>
+                </div>
+
+                <div class="itinerario-card">
+                    <span class="badge-dia"><i class="fa-solid fa-mug-hot"></i> <span data-es="Descanso & Mates" data-en="Rest & Teas">Descanso & Mates</span></span>
+                    <h3 data-es="Mates andinos" data-en="Andean herbal teas">Mates andinos</h3>
+                    <p data-es="Infusiones de muña, coca y anís. Si reservas directo en esta web, tu primer mate de bienvenida va por la casa. Los demás los encuentras en nuestra carta."
+                       data-en="Muña, coca leaf and anise teas. Book direct on this site and your first welcome tea is on the house. The rest are on our menu.">Infusiones de muña, coca y anís. Si reservas directo en esta web, tu primer mate de bienvenida va por la casa. Los demás los encuentras en nuestra carta.</p>
+                    <a class="enlace-seccion" href="#carta" data-es="Ver mates" data-en="See the teas">Ver mates</a>
+                </div>
+
+                <div class="itinerario-card">
+                    <span class="badge-dia"><i class="fa-solid fa-sun"></i> <span data-es="Para empezar el día" data-en="Start your day">Para empezar el día</span></span>
+                    <h3 data-es="Desayuno buffet local" data-en="Local breakfast buffet">Desayuno buffet local</h3>
+                    <p data-es="Frutas de la estación, panes artesanales, quesos andinos y jugos naturales."
+                       data-en="Seasonal fruit, artisan breads, Andean cheeses and fresh juices.">Frutas de la estación, panes artesanales, quesos andinos y jugos naturales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carta andina y mates (se genera desde js/main.js) -->
+    <section id="carta" class="bg-light">
+        <div class="container">
+            <h2 data-es="Carta Andina y Mates" data-en="Andean Menu & Teas">Carta Andina y Mates</h2>
+
+            <div class="aviso-mate">
+                <i class="fa-solid fa-gift"></i>
+                <p>
+                    <strong data-es="Mate de bienvenida de cortesía." data-en="Complimentary welcome tea.">Mate de bienvenida de cortesía.</strong>
+                    <span data-es="Es un beneficio exclusivo para quienes reservan directamente en esta página. Cualquier huésped o visitante puede pedir los mates de la carta."
+                          data-en="This is an exclusive perk for guests who book directly on this site. Any guest or visitor can order the teas on the menu.">Es un beneficio exclusivo para quienes reservan directamente en esta página. Cualquier huésped o visitante puede pedir los mates de la carta.</span>
+                </p>
+            </div>
+
+            <div class="carta-grid">
+                <div class="carta-col">
+                    <h3><i class="fa-solid fa-bowl-food"></i> <span data-es="Platos andinos" data-en="Andean dishes">Platos andinos</span></h3>
+                    <ul class="carta-lista" id="cartaPlatos"></ul>
+                </div>
+                <div class="carta-col">
+                    <h3><i class="fa-solid fa-mug-hot"></i> <span data-es="Mates andinos" data-en="Andean teas">Mates andinos</span></h3>
+                    <ul class="carta-lista" id="cartaMates"></ul>
+                </div>
+            </div>
+
+            <p class="carta-nota" data-es="Precios en soles (S/). Pueden variar según temporada." data-en="Prices in Peruvian soles (S/). They may vary by season.">Precios en soles (S/). Pueden variar según temporada.</p>
+
+            <div class="carta-cta">
+                <a href="#inicio" class="btn-wa" data-es="Reserva directo y recibe tu mate" data-en="Book direct and get your welcome tea">Reserva directo y recibe tu mate</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aclimatación y salud -->
+    <section id="aclimatacion" class="bg-alt">
+        <div class="container">
+            <h2 data-es="Aclimatación y Cuidado de tu Salud" data-en="Altitude Care & Your Health">Aclimatación y Cuidado de tu Salud</h2>
+            <p class="subtitulo-sec"
+               data-es="Consejos para que la altura no te quite energía durante tu visita"
+               data-en="Tips so the altitude does not slow you down during your visit">Consejos para que la altura no te quite energía durante tu visita</p>
+
+            <div class="cards-info-grid">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-lungs"></i></div>
+                    <h3 data-es="Al llegar" data-en="When you arrive">Al llegar</h3>
+                    <ul class="salud-list">
+                        <li><i class="fa-solid fa-check"></i><span data-es="Descansa un momento y evita esfuerzos intensos las primeras horas." data-en="Rest for a while and avoid strenuous effort during the first hours.">Descansa un momento y evita esfuerzos intensos las primeras horas.</span></li>
+                        <li><i class="fa-solid fa-check"></i><span data-es="Toma agua con frecuencia y come ligero." data-en="Drink water often and eat light meals.">Toma agua con frecuencia y come ligero.</span></li>
+                        <li><i class="fa-solid fa-check"></i><span data-es="Evita el alcohol el primer día." data-en="Avoid alcohol on your first day.">Evita el alcohol el primer día.</span></li>
+                        <li><i class="fa-solid fa-check"></i><span data-es="Prueba un mate de coca o muña, infusiones andinas que se toman tradicionalmente para sentirte mejor con la altura." data-en="Try a coca leaf or muña tea, Andean infusions traditionally taken to feel better at altitude.">Prueba un mate de coca o muña, infusiones andinas que se toman tradicionalmente para sentirte mejor con la altura.</span></li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3 data-es="Apoyo del hotel" data-en="Hotel support">Apoyo del hotel</h3>
+                    <ul class="salud-list">
+                        <li><i class="fa-solid fa-check"></i><span data-es="Oxigenoterapia disponible bajo solicitud." data-en="Oxygen therapy available on request.">Oxigenoterapia disponible bajo solicitud.</span></li>
+                        <li><i class="fa-solid fa-check"></i><span data-es="Orientación del personal ante cualquier malestar." data-en="Staff guidance if you feel unwell.">Orientación del personal ante cualquier malestar.</span></li>
+                        <li><i class="fa-solid fa-check"></i><span data-es="Te ayudamos a llegar a atención médica si la necesitas." data-en="We help you reach medical care if you need it.">Te ayudamos a llegar a atención médica si la necesitas.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="aviso-medico"
+               data-es="Esta información es orientativa y no reemplaza una consulta médica. Si tienes dolor de cabeza fuerte, vómitos, mareo intenso o dificultad para respirar, avísanos de inmediato."
+               data-en="This information is general guidance and does not replace medical advice. If you have a severe headache, vomiting, intense dizziness or trouble breathing, tell us right away.">Esta información es orientativa y no reemplaza una consulta médica. Si tienes dolor de cabeza fuerte, vómitos, mareo intenso o dificultad para respirar, avísanos de inmediato.</p>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="container">
+        <h2 data-es="Contacto" data-en="Contact">Contacto</h2>
+        <div class="contacto-grid">
+            <div class="contacto-info">
+                <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/51974516932" target="_blank" rel="noopener noreferrer">+51 974 516 932</a></p>
+                <p><i class="fa-solid fa-envelope"></i> contacto@sumaqsamay.com</p>
+                <p><i class="fa-solid fa-location-dot"></i> <span data-es="Machu Picchu Pueblo, Cusco, Perú" data-en="Machu Picchu Pueblo, Cusco, Peru">Machu Picchu Pueblo, Cusco, Perú</span></p>
+                <p><i class="fa-solid fa-clock"></i> <span data-es="Atención por WhatsApp todos los días" data-en="WhatsApp support every day">Atención por WhatsApp todos los días</span></p>
+            </div>
+
+            <form class="contacto-form" id="formContacto">
+                <div class="form-group">
+                    <label for="contactoNombre" data-es="Tu nombre" data-en="Your name">Tu nombre</label>
+                    <input type="text" id="contactoNombre" maxlength="80" autocomplete="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactoMensaje" data-es="¿En qué podemos ayudarte?" data-en="How can we help you?">¿En qué podemos ayudarte?</label>
+                    <textarea id="contactoMensaje" maxlength="500" required></textarea>
+                </div>
+                <button type="submit" class="btn-wa">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span data-es="Enviar consulta por WhatsApp" data-en="Send inquiry on WhatsApp">Enviar consulta por WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Hotel Sumaq Samay · Cusco - Machu Picchu</p>
+    </footer>
+
+    <!-- Modal de reserva directa -->
+    <div class="modal" id="modalReserva" role="dialog" aria-modal="true" aria-labelledby="tituloReserva">
+        <div class="modal-contenido">
+            <button type="button" class="modal-cerrar" id="btnCerrarModal" aria-label="Cerrar / Close">&times;</button>
+            <h3 id="tituloReserva" data-es="Reserva directa" data-en="Direct booking">Reserva directa</h3>
+            <p class="modal-sub"
+               data-es="Completa tus datos y te abrimos WhatsApp con tu reserva lista para enviar."
+               data-en="Fill in your details and we open WhatsApp with your booking ready to send.">Completa tus datos y te abrimos WhatsApp con tu reserva lista para enviar.</p>
+
+            <form class="form-modal" id="formReservaDirecta">
+                <div class="form-group">
+                    <label for="modalHabitacionId" data-es="Habitación" data-en="Room">Habitación</label>
+                    <select id="modalHabitacionId"></select>
+                </div>
+                <div class="form-fila">
+                    <div class="form-group">
+                        <label for="reservaCheckin" data-es="Llegada" data-en="Check-in">Llegada</label>
+                        <input type="date" id="reservaCheckin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reservaCheckout" data-es="Salida" data-en="Check-out">Salida</label>
+                        <input type="date" id="reservaCheckout" required>
+                    </div>
+                </div>
+                <div class="form-fila">
+                    <div class="form-group">
+                        <label for="reservaHuespedes" data-es="Huéspedes" data-en="Guests">Huéspedes</label>
+                        <select id="reservaHuespedes">
+                            <option value="1" data-es="1 Persona" data-en="1 Guest">1 Persona</option>
+                            <option value="2" data-es="2 Personas" data-en="2 Guests">2 Personas</option>
+                            <option value="3" data-es="3+ Personas" data-en="3+ Guests">3+ Personas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reservaMate" data-es="Mate de bienvenida (cortesía)" data-en="Welcome tea (complimentary)">Mate de bienvenida (cortesía)</label>
+                        <select id="reservaMate"></select>
+                    </div>
+                </div>
+
+                <div class="resumen-precio" id="reservaMontoTotal" aria-live="polite"></div>
+
+                <div class="form-group">
+                    <label for="clienteNombre" data-es="Nombre completo" data-en="Full name">Nombre completo</label>
+                    <input type="text" id="clienteNombre" maxlength="80" autocomplete="name" required>
+                </div>
+                <div class="form-fila">
+                    <div class="form-group">
+                        <label for="clienteEmail" data-es="Correo" data-en="Email">Correo</label>
+                        <input type="email" id="clienteEmail" maxlength="100" autocomplete="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clienteTelefono" data-es="Teléfono" data-en="Phone">Teléfono</label>
+                        <input type="tel" id="clienteTelefono" maxlength="20" inputmode="tel" autocomplete="tel" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reservaNotas" data-es="Notas (opcional)" data-en="Notes (optional)">Notas (opcional)</label>
+                    <textarea id="reservaNotas" maxlength="300"></textarea>
+                </div>
+
+                <button type="submit" class="btn-wa">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span data-es="Confirmar reserva por WhatsApp" data-en="Confirm booking on WhatsApp">Confirmar reserva por WhatsApp</span>
+                </button>
+                <p class="nota-mate"
+                   data-es="El mate de bienvenida es un beneficio exclusivo de la reserva directa en esta web."
+                   data-en="The welcome tea is an exclusive perk of booking directly on this site.">El mate de bienvenida es un beneficio exclusivo de la reserva directa en esta web.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="toast-notif" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Botón Flotante de WhatsApp (RF02): el enlace se actualiza desde js/main.js según el idioma -->
+    <a href="https://wa.me/51974516932?text=Hola,%20deseo%20informaci%C3%B3n%20y%20reservar%20en%20Sumaq%20Samay"
+       class="btn-whatsapp" id="btnWhatsappFlotante" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
